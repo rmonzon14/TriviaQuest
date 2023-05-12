@@ -1,0 +1,43 @@
+/* Indie Flower Font */
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(#638a39, #92bce4);
+    font-family: 'Indie Flower', cursive;
+}
+
+header {
+    font-size: 1.4rem;
+    text-align: center;
+    margin: 60px 0 20px 0;
+}
+
+h1 span {
+    color: rgb(247, 213, 213);
+    letter-spacing: 4px;
+}
+
+#intro-section {
+    width: 500px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#intro-form label {
+    display: block;
+    font-size: 1.2rem;
+}
+
+main {
+    display: none;
+}
