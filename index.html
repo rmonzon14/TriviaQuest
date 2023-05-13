@@ -15,12 +15,12 @@
 
     <section id="intro-section">
         <form id="intro-form" action="index.html" method="POST">
-            <div class="questions-count-container">
+            <div>
                 <label for="questions-count">How many questions would you like to answer?</label>
                 <input type="number" id="questions-count" name="questions-count">
             </div>
 
-            <div class="category-container">
+            <div>
                 <label for="category">Choose a category:</label>
                 <select name="category" id="category">
                     <option value="">Any</option>
@@ -30,7 +30,7 @@
                 </select>
             </div>
 
-            <div class="difficulty-container">
+            <div>
                 <label for="difficulty">Choose a difficulty:</label>
                 <select name="difficulty" id="difficulty">
                     <option value="Easy">Easy</option>
@@ -39,7 +39,7 @@
                 </select>
             </div>
 
-            <div class="questions-type-container">
+            <div>
                 <label for="questions-type">Choose the type of questions:</label>
                 <select name="questions-type" id="questions-type">
                     <option value="">Any</option>
@@ -48,7 +48,9 @@
                 </select>
             </div>
 
-            <button type="submit">Start</button>
+            <div>
+                <button type="submit" class="start">Start</button>
+            </div>
         </form>
     </section>
 
