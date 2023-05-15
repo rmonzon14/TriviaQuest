@@ -86,7 +86,7 @@ h1 span {
 }
 
 main {
-    margin: 200px auto;
+    margin: 100px auto;
     width: 900px;
 }
 
@@ -96,10 +96,48 @@ main {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #638a39;
     margin: 10px;
 }
 
-#questions-section {
+.question-num {
+    font-size: 2.1rem;
+}
 
+.question, .choices {
+    font-size: 1.3rem;
+    margin-left: 15px;
+}
+
+.choices {
+    margin-top: 20px;
+}
+
+#questions-section div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.user-answer {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.check-answer {
+    border-style: none;
+    padding: 5px 18px;
+    border-radius: 5px;
+    background-color: #638a39;
+    font-size: 1rem;
+}
+
+.check-answer:hover {
+    color: rgb(175, 206, 158);
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
 }
