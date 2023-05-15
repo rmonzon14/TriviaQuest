@@ -13,7 +13,7 @@
 body {
     min-height: 100vh;
     background: linear-gradient(#638a39, #92bce4);
-    font-family: 'Indie Flower', cursive;
+    font-family: 'Indie Flower', cursive; 
 }
 
 header {
@@ -28,11 +28,12 @@ h1 span {
 }
 
 #intro-section {
-    width: 500px;
+    display: none;
+    /* width: 500px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 }
 
 #intro-form div {
@@ -85,5 +86,20 @@ h1 span {
 }
 
 main {
-    display: none;
+    margin: 200px auto;
+    width: 900px;
+}
+
+.score {
+    font-weight: bold;
+    font-size: 1.8rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #638a39;
+    margin: 10px;
+}
+
+#questions-section {
+
 }
