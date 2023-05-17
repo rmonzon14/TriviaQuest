@@ -28,12 +28,12 @@ h1 span {
 }
 
 #intro-section {
-    display: none;
-    /* width: 500px;
+    width: 500px;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center; */
+    align-items: center; 
 }
 
 #intro-form div {
@@ -61,6 +61,12 @@ h1 span {
     letter-spacing: 1px;
 }
 
+.error {
+    font-weight: bold;
+    font-family: sans-serif;
+    margin: 10px;
+}
+
 #intro-form select {
     background-color: #638a39;
 }
@@ -86,6 +92,7 @@ h1 span {
 }
 
 main {
+    display: none;
     margin: 100px auto;
     width: 900px;
 }
