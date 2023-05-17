@@ -14,10 +14,14 @@
             <h1>Welcome to <span>Trivia Quest</span></h1>
         </header>
 
-        <form id="intro-form" action="index.html" method="POST">
+        <form id="intro-form" action="index.html" method="POST" novalidate>
             <div>
                 <label for="questions-count">How many questions would you like to answer?</label>
                 <input type="number" id="questions-count" name="questions-count">
+
+                <div>
+                    <p class="error"></p>
+                </div>
             </div>
 
             <div>
@@ -33,9 +37,10 @@
             <div>
                 <label for="difficulty">Choose a difficulty:</label>
                 <select name="difficulty" id="difficulty">
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
+                    <option value="">Any</option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
                 </select>
             </div>
 
@@ -54,11 +59,11 @@
         </form>
     </section>
 
-    <aside>
-        <p class="score">Score: 5/<span class="out-of">10</span></p>
-    </aside>
-
     <main>
+        <aside>
+            <p class="score">Score: 5/<span class="out-of">10</span></p>
+        </aside>
+
         <section id="questions-section">
             <div id="question-container">
                 <h3 class="question-num">Question <span>1</span>:</h3>
