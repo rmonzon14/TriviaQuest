@@ -1,5 +1,6 @@
 const trivia = (() => {  
     let url = "";
+    let questionNum = 1;
 
     const getUrl = () => {
         return url
@@ -9,7 +10,15 @@ const trivia = (() => {
         url = value;
     };
 
-    return {getUrl, setUrl}
+    const getQuestionNum = () => {
+        return questionNum;
+    }
+
+    const setQuestionNum = (value) => {
+        questionNum = value;
+    };
+
+    return {getUrl, setUrl, getQuestionNum, setQuestionNum}
 })();
 
 const introForm = document.getElementById("intro-form");
@@ -36,8 +45,8 @@ const validateInput = () => {
         error.textContent = "";
         
         introSection.innerHTML = "";
-
-        startAsking();
+        trivia.setUrl(generateUrl());
+        displayQuestions();
     }
 }
 
@@ -58,11 +67,54 @@ const generateUrl = () => {
     return url;
 }
 
-const startAsking = () => {
-    trivia.setUrl(generateUrl());
-
+const displayQuestions = () => {
     const main = document.getElementsByTagName("main")[0];
     main.style.display = "block";
     
+    fetchApi();
 }
 
+const fetchApi = async () => {
+    const requestURL = trivia.getUrl();
+    const request = new Request(requestURL);
+
+    const response = await fetch(request);
+    const result = await response.json();
+    const data = result["results"];
+
+    const questionNum = document.getElementsByClassName("question-num")[0];
+    const question = document.getElementsByClassName("question")[0];
+    const correctAnswer = data[trivia.getQuestionNum() - 1]["correct_answer"];
+    const choicesArray = data[trivia.getQuestionNum() - 1]["incorrect_answers"];
+    const questionType = data[trivia.getQuestionNum() - 1].type;
+
+    questionNum.textContent = `Question: ${trivia.getQuestionNum()}`;
+    question.textContent = data[trivia.getQuestionNum() - 1].question;
+
+    // Inserts the correct answer randomly for multiple choices questions. 
+    choicesArray.splice(choicesArray.length * Math.random(), 0, correctAnswer);
+
+    if (questionType === "multiple") {
+        const typeOneUl = document.querySelector(".type-one");
+        const typeOneLists = document.querySelectorAll(".type-one li");
+        
+        typeOneUl.style.display = "block";
+
+        typeOneLists.forEach((data, i) => {
+            if (i == 0) {   
+                data.innerHTML = `<span class="letter">a. </span>${choicesArray[i]}`;
+            } else if (i == 1) {
+                data.innerHTML = `<span class="letter">b. </span>${choicesArray[i]}`;
+            } else if (i == 2) {
+                data.innerHTML = `<span class="letter">c. </span>${choicesArray[i]}`;
+            } else if (i == 3) {
+                data.innerHTML = `<span class="letter">d. </span>${choicesArray[i]}`;
+            }
+        });
+    } else if (questionType === "boolean") {
+        const typeTwoUl = document.querySelector(".type-two");
+        
+        typeTwoUl.style.display = "block";
+    }
+    console.log(data);
+}
