@@ -45,8 +45,7 @@ const validateInput = () => {
         error.textContent = "";
         
         introSection.innerHTML = "";
-        trivia.setUrl(generateUrl());
-        displayQuestions();
+        fetchApi();
     }
 }
 
@@ -67,21 +66,10 @@ const generateUrl = () => {
     return url;
 }
 
-const displayQuestions = () => {
+const displayQuestions = (data) => {
     const main = document.getElementsByTagName("main")[0];
     main.style.display = "block";
     
-    fetchApi();
-}
-
-const fetchApi = async () => {
-    const requestURL = trivia.getUrl();
-    const request = new Request(requestURL);
-
-    const response = await fetch(request);
-    const result = await response.json();
-    const data = result["results"];
-
     const questionNum = document.getElementsByClassName("question-num")[0];
     const question = document.getElementsByClassName("question")[0];
     const correctAnswer = data[trivia.getQuestionNum() - 1]["correct_answer"];
@@ -116,5 +104,16 @@ const fetchApi = async () => {
         
         typeTwoUl.style.display = "block";
     }
-    console.log(data);
+}
+
+const fetchApi = async () => {
+    trivia.setUrl(generateUrl());
+    const requestURL = trivia.getUrl();
+    const request = new Request(requestURL);
+
+    const response = await fetch(request);
+    const result = await response.json();
+    const data = result["results"];
+
+    displayQuestions(data);
 }
