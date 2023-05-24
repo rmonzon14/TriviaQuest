@@ -21,6 +21,20 @@ const trivia = (() => {
     return {getUrl, setUrl, getQuestionNum, setQuestionNum}
 })();
 
+const user = (() => {
+    let score = 0;
+
+    const setScore = (value) => {
+        score = value;
+    }
+
+    const getScore = () => {
+        return score;
+    }
+
+    return {getScore, setScore}
+})();
+
 const introForm = document.getElementById("intro-form");
 const questionsCount = document.getElementById("questions-count");
 const category = document.getElementById("category");
@@ -43,7 +57,6 @@ const validateInput = () => {
         error.textContent = "The number of questions should be more than one."; 
     } else {
         error.textContent = "";
-        
         introSection.innerHTML = "";
         fetchApi();
     }
@@ -108,6 +121,7 @@ const displayQuestions = (data) => {
 
 const fetchApi = async () => {
     trivia.setUrl(generateUrl());
+
     const requestURL = trivia.getUrl();
     const request = new Request(requestURL);
 
@@ -116,4 +130,13 @@ const fetchApi = async () => {
     const data = result["results"];
 
     displayQuestions(data);
+}
+
+const handleScore = (() => {
+    const score = document.querySelector(".score");
+    score.textContent = user.getScore();
+})();
+
+const getAnswer = () => {
+    
 }
