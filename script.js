@@ -135,12 +135,23 @@ const start = (data) => {
     })();
 
     const choices = document.querySelectorAll(".letter");
-
     choices.forEach(data => {
         data.addEventListener("click", () => {
+            markLetter(data);
             bindAnswer(data.getAttribute("data"));
         });
     })
+
+    const markLetter = (element) => {
+        // Removes the mark when a different answer is clicked.
+        choices.forEach(data => {
+            if (data.classList.contains("choices-clicked")) {
+                data.classList.remove("choices-clicked");
+            }
+        });
+
+        element.classList.add("choices-clicked");
+    }
 
     const bindAnswer = (answer) => {
         const userAnswer = document.querySelector(".user-answer");
