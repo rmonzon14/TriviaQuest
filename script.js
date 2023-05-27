@@ -119,20 +119,32 @@ const start = (data) => {
     
             typeOneLists.forEach((data, i) => {
                 if (i == 0) {   
-                    data.innerHTML = `<span class="letter">a. </span>${choicesArray[i]}`;
+                    data.innerHTML = `<span class="letter" data="${choicesArray[i]}">a. </span>${choicesArray[i]}`;
                 } else if (i == 1) {
-                    data.innerHTML = `<span class="letter">b. </span>${choicesArray[i]}`;
+                    data.innerHTML = `<span class="letter" data="${choicesArray[i]}">b. </span>${choicesArray[i]}`;
                 } else if (i == 2) {
-                    data.innerHTML = `<span class="letter">c. </span>${choicesArray[i]}`;
+                    data.innerHTML = `<span class="letter" data="${choicesArray[i]}">c. </span>${choicesArray[i]}`;
                 } else if (i == 3) {
-                    data.innerHTML = `<span class="letter">d. </span>${choicesArray[i]}`;
+                    data.innerHTML = `<span class="letter" data="${choicesArray[i]}">d. </span>${choicesArray[i]}`;
                 }
             });
         } else if (questionType === "boolean") {
             const typeTwoUl = document.querySelector(".type-two");
-            
             typeTwoUl.style.display = "block";
         }
     })();
+
+    const choices = document.querySelectorAll(".letter");
+
+    choices.forEach(data => {
+        data.addEventListener("click", () => {
+            bindAnswer(data.getAttribute("data"));
+        });
+    })
+
+    const bindAnswer = (answer) => {
+        const userAnswer = document.querySelector(".user-answer");
+        userAnswer.textContent = answer;
+    }
 }
 
