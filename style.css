@@ -134,6 +134,12 @@ main {
     border-radius: 50%;
 }
 
+.choices-clicked {
+    cursor: pointer;
+    border: solid black 2px;
+    border-radius: 50%;
+}
+
 #questions-section div:nth-child(2) {
     display: flex;
     flex-direction: column;
