@@ -157,5 +157,36 @@ const start = (data) => {
         const userAnswer = document.querySelector(".user-answer");
         userAnswer.textContent = answer;
     }
+
+    const checkAnswerBtn = document.querySelector(".check-answer");
+    checkAnswerBtn.addEventListener("click", () => {
+        checkAnswer();
+    });
+
+    const checkAnswer = () => {
+        const correctAnswer = data[trivia.getQuestionNum() - 1]["correct_answer"];
+        const userAnswer = document.querySelector(".user-answer");
+
+        if (correctAnswer === userAnswer.textContent) {
+            console.log("Correct");
+            userAnswer.style.color = "green";
+
+        
+        } else {
+            console.log("Wrong"); 
+            userAnswer.style.color = "red";
+        }
+        
+        disableClick();
+        showNext();
+    }
+
+    const disableClick = () => {
+        choices.forEach(data => {
+            data.style.pointerEvents = "none";
+        })
+
+        checkAnswerBtn.setAttribute("disabled", "");
+    };
 }
 
