@@ -111,7 +111,7 @@ main {
 }
 
 .question, .choices {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
     margin-left: 15px;
 }
 
@@ -151,6 +151,7 @@ main {
 .user-answer {
     font-weight: bold;
     font-size: 1.4rem;
+    letter-spacing: 2px;
 }
 
 .check-answer {
@@ -159,14 +160,27 @@ main {
     border-radius: 5px;
     background-color: #638a39;
     font-size: 1rem;
-}
-
-.check-answer:hover {
-    color: rgb(175, 206, 158);
-    cursor: pointer;
+    transition: 0.3s ease-in-out;
 }
 
 ul {
     list-style: none;
 }
 
+.next {
+    display: none;
+}
+
+.next button {
+    border-style: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    background-color: #638a39;
+    font-size: 1rem;
+    transition: 0.3s ease-in-out;
+}
+
+.next button:hover {
+    transform: scale(1.1);
+    color: white;
+}
