@@ -156,29 +156,39 @@ const start = (data) => {
     const bindAnswer = (answer) => {
         const userAnswer = document.querySelector(".user-answer");
         userAnswer.textContent = answer;
+
+        enableCheckAnswer();
     }
 
     const checkAnswerBtn = document.querySelector(".check-answer");
     checkAnswerBtn.addEventListener("click", () => {
         checkAnswer();
+        showNextBtn();
+        disableClick();
     });
+
+    const enableCheckAnswer = () => {
+        checkAnswerBtn.removeAttribute("disabled");
+
+        checkAnswerBtn.addEventListener("mouseover", () => {
+            checkAnswerBtn.style.cssText = `transform: scale(1.1); color: white`;
+        });
+
+        checkAnswerBtn.addEventListener("mouseout", () => {
+            checkAnswerBtn.style.cssText = `transform: scale(1); color: black`;
+        });
+    }
 
     const checkAnswer = () => {
         const correctAnswer = data[trivia.getQuestionNum() - 1]["correct_answer"];
         const userAnswer = document.querySelector(".user-answer");
 
         if (correctAnswer === userAnswer.textContent) {
-            console.log("Correct");
-            userAnswer.style.color = "green";
-
-        
+            userAnswer.setAttribute("style", "color: green; font-weight: bold;");
         } else {
-            console.log("Wrong"); 
-            userAnswer.style.color = "red";
+            userAnswer.setAttribute("style", "color: red; font-weight: bold;");
+            showCorrectAnswer(correctAnswer);
         }
-        
-        disableClick();
-        showNext();
     }
 
     const disableClick = () => {
@@ -187,6 +197,28 @@ const start = (data) => {
         })
 
         checkAnswerBtn.setAttribute("disabled", "");
+        checkAnswerBtn.style.color = "black";
     };
+
+    const showCorrectAnswer = (correctAnswer) => {
+        choices.forEach(data => {
+            if (correctAnswer === data.getAttribute("data")) {
+                const parent = data.parentNode;
+                parent.setAttribute("style", "color: green; font-weight: bold;");
+            }
+        })
+    }
+
+    const showNextBtn = () => {
+        const nextBtn = document.querySelector(".next");
+        nextBtn.style.cssText = `
+            display: block;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            margin-right: 150px;
+            margin-bottom: 100px;
+        `;
+    }
 }
 
