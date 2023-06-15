@@ -1,6 +1,7 @@
 const trivia = (() => {  
     let url = "";
     let questionNum = 1;
+    let questionArray;
 
     const getUrl = () => {
         return url
@@ -14,11 +15,19 @@ const trivia = (() => {
         return questionNum;
     }
 
-    const setQuestionNum = (value) => {
-        questionNum = value;
+    const updateQuestionNum = () => {
+        questionNum++;
     };
 
-    return {getUrl, setUrl, getQuestionNum, setQuestionNum}
+    const setQuestionArray = (value) => {
+        questionArray = [...value];
+    }
+
+    const getQuestionArray = () => {
+        return questionArray;
+    }
+
+    return {getUrl, setUrl, getQuestionNum, updateQuestionNum, setQuestionArray, getQuestionArray}
 })();
 
 const user = (() => {
@@ -89,50 +98,46 @@ const introduction = (() => {
         const response = await fetch(request);
         const result = await response.json();
         const data = result["results"];
-    
-        start(data);
+
+        trivia.setQuestionArray(data);
+        start();
     }
 })();
 
-const start = (data) => {
-    const main = document.getElementsByTagName("main")[0];
-    main.style.display = "block";
-    
-    const displayQuestion = (() => {
-        const questionNum = document.getElementsByClassName("question-num")[0];
-        const question = document.getElementsByClassName("question")[0];
-        const correctAnswer = data[trivia.getQuestionNum() - 1]["correct_answer"];
-        const choicesArray = data[trivia.getQuestionNum() - 1]["incorrect_answers"];
-        const questionType = data[trivia.getQuestionNum() - 1].type;
-    
-        questionNum.textContent = `Question: ${trivia.getQuestionNum()}`;
-        question.textContent = data[trivia.getQuestionNum() - 1].question;
-    
-        // Inserts the correct answer randomly for multiple choices questions. 
-        choicesArray.splice(choicesArray.length * Math.random(), 0, correctAnswer);
-    
-        if (questionType === "multiple") {
-            const typeOneUl = document.querySelector(".type-one");
-            const typeOneLists = document.querySelectorAll(".type-one li");
-            
-            typeOneUl.style.display = "block";
-    
-            typeOneLists.forEach((data, i) => {
-                if (i == 0) {   
-                    data.innerHTML = `<span class="letter" data="${choicesArray[i]}">a. </span>${choicesArray[i]}`;
-                } else if (i == 1) {
-                    data.innerHTML = `<span class="letter" data="${choicesArray[i]}">b. </span>${choicesArray[i]}`;
-                } else if (i == 2) {
-                    data.innerHTML = `<span class="letter" data="${choicesArray[i]}">c. </span>${choicesArray[i]}`;
-                } else if (i == 3) {
-                    data.innerHTML = `<span class="letter" data="${choicesArray[i]}">d. </span>${choicesArray[i]}`;
-                }
-            });
-        } else if (questionType === "boolean") {
-            const typeTwoUl = document.querySelector(".type-two");
-            typeTwoUl.style.display = "block";
-        }
-    })();
+const displayQuestion = (data) => {
+    const questionNum = document.getElementsByClassName("question-num")[0];
+    const question = document.getElementsByClassName("question")[0];
+    const correctAnswer = data[trivia.getQuestionNum() - 1]["correct_answer"];
+    const choicesArray = data[trivia.getQuestionNum() - 1]["incorrect_answers"];
+    const questionType = data[trivia.getQuestionNum() - 1].type;
+
+    questionNum.textContent = `Question: ${trivia.getQuestionNum()}`;
+    question.textContent = data[trivia.getQuestionNum() - 1].question;
+
+    // Inserts the correct answer randomly for multiple choices questions. 
+    choicesArray.splice(choicesArray.length * Math.random(), 0, correctAnswer);
+
+    if (questionType === "multiple") {
+        const typeOneUl = document.querySelector(".type-one");
+        const typeOneLists = document.querySelectorAll(".type-one li");
+        
+        typeOneUl.style.display = "block";
+
+        typeOneLists.forEach((data, i) => {
+            if (i == 0) {   
+                data.innerHTML = `<span class="letter" data="${choicesArray[i]}">a. </span>${choicesArray[i]}`;
+            } else if (i == 1) {
+                data.innerHTML = `<span class="letter" data="${choicesArray[i]}">b. </span>${choicesArray[i]}`;
+            } else if (i == 2) {
+                data.innerHTML = `<span class="letter" data="${choicesArray[i]}">c. </span>${choicesArray[i]}`;
+            } else if (i == 3) {
+                data.innerHTML = `<span class="letter" data="${choicesArray[i]}">d. </span>${choicesArray[i]}`;
+            }
+        });
+    } else if (questionType === "boolean") {
+        const typeTwoUl = document.querySelector(".type-two");
+        typeTwoUl.style.display = "block";
+    }
 
     const choices = document.querySelectorAll(".letter");
     choices.forEach(data => {
@@ -179,10 +184,8 @@ const start = (data) => {
         });
     }
 
+    const userAnswer = document.querySelector(".user-answer");
     const checkAnswer = () => {
-        const correctAnswer = data[trivia.getQuestionNum() - 1]["correct_answer"];
-        const userAnswer = document.querySelector(".user-answer");
-
         if (correctAnswer === userAnswer.textContent) {
             userAnswer.setAttribute("style", "color: green; font-weight: bold;");
         } else {
@@ -208,9 +211,8 @@ const start = (data) => {
             }
         })
     }
-
+    const nextBtn = document.querySelector(".next");
     const showNextBtn = () => {
-        const nextBtn = document.querySelector(".next");
         nextBtn.style.cssText = `
             display: block;
             position: absolute;
@@ -220,5 +222,36 @@ const start = (data) => {
             margin-bottom: 100px;
         `;
     }
+
+    const reset = () => {
+        choices.forEach(data => {
+            data.style.cssText = `
+                color: black;
+                pointer-events = auto;
+                font-weight: normal;
+            `;
+
+            data.classList.remove("choices-clicked");
+        })
+
+        checkAnswerBtn.setAttribute("disabled", "");
+        userAnswer.textContent = "";
+        nextBtn.style.display = "none";
+    }
+
+    nextBtn.addEventListener("click", () => {
+        trivia.updateQuestionNum();
+        reset();
+        displayQuestion(data);
+    });
+};
+
+const start = () => {
+    const main = document.getElementsByTagName("main")[0];
+    main.style.display = "block";
+
+    const data = trivia.getQuestionArray();
+    
+    displayQuestion(data);
 }
 
