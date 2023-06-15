@@ -118,25 +118,40 @@ const displayQuestion = (data) => {
     choicesArray.splice(choicesArray.length * Math.random(), 0, correctAnswer);
 
     if (questionType === "multiple") {
-        const typeOneUl = document.querySelector(".type-one");
-        const typeOneLists = document.querySelectorAll(".type-one li");
-        
-        typeOneUl.style.display = "block";
+        const typeMultipleUl = document.querySelector(".type-multiple"); 
+        typeMultipleUl.style.display = "block";
 
-        typeOneLists.forEach((data, i) => {
+        for (let i = 0; i < 4; i++) {
+            const li = document.createElement("li");
+
             if (i == 0) {   
-                data.innerHTML = `<span class="letter" data="${choicesArray[i]}">a. </span>${choicesArray[i]}`;
+                li.innerHTML = `<span class="letter" data="${choicesArray[i]}">a. </span>${choicesArray[i]}`;
             } else if (i == 1) {
-                data.innerHTML = `<span class="letter" data="${choicesArray[i]}">b. </span>${choicesArray[i]}`;
+                li.innerHTML = `<span class="letter" data="${choicesArray[i]}">b. </span>${choicesArray[i]}`;
             } else if (i == 2) {
-                data.innerHTML = `<span class="letter" data="${choicesArray[i]}">c. </span>${choicesArray[i]}`;
+                li.innerHTML = `<span class="letter" data="${choicesArray[i]}">c. </span>${choicesArray[i]}`;
             } else if (i == 3) {
-                data.innerHTML = `<span class="letter" data="${choicesArray[i]}">d. </span>${choicesArray[i]}`;
+                li.innerHTML = `<span class="letter" data="${choicesArray[i]}">d. </span>${choicesArray[i]}`;
             }
-        });
+            
+            typeMultipleUl.appendChild(li);
+        }
+
     } else if (questionType === "boolean") {
-        const typeTwoUl = document.querySelector(".type-two");
-        typeTwoUl.style.display = "block";
+        const typeBooleanUl = document.querySelector(".type-boolean");
+        typeBooleanUl.style.display = "block";
+
+        for (let i = 0; i < 2; i++) {
+            const li = document.createElement("li");
+
+            if (i == 0) {   
+                li.innerHTML = `<span class="letter" data="True">a. </span>True`;
+            } else if (i == 1) {
+                li.innerHTML = `<span class="letter" data="False">b. </span>False`;
+            } 
+            
+            typeBooleanUl.appendChild(li);
+        }
     }
 
     const choices = document.querySelectorAll(".letter");
@@ -224,6 +239,12 @@ const displayQuestion = (data) => {
     }
 
     const reset = () => {
+        const typeMultipleUl = document.querySelector(".type-multiple"); 
+        const typeBooleanUl = document.querySelector(".type-boolean");
+
+        typeBooleanUl.innerHTML = "";
+        typeMultipleUl.innerHTML = "";
+
         choices.forEach(data => {
             data.style.cssText = `
                 color: black;
