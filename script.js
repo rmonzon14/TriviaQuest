@@ -1,6 +1,7 @@
 const trivia = (() => {  
     let url = "";
     let questionNum = 1;
+    let totalQuestions;
     let questionArray;
 
     const getUrl = () => {
@@ -10,6 +11,14 @@ const trivia = (() => {
     const setUrl = (value) => {
         url = value;
     };
+
+    const setTotalQuestions = (value) => {
+        totalQuestions = value
+    }
+
+    const getTotalQuestions = () => {
+        return totalQuestions;
+    }
 
     const getQuestionNum = () => {
         return questionNum;
@@ -27,21 +36,21 @@ const trivia = (() => {
         return questionArray;
     }
 
-    return {getUrl, setUrl, getQuestionNum, updateQuestionNum, setQuestionArray, getQuestionArray}
+    return {getUrl, setUrl, getQuestionNum, updateQuestionNum, setQuestionArray, getQuestionArray, setTotalQuestions, getTotalQuestions}
 })();
 
 const user = (() => {
     let score = 0;
 
-    const setScore = (value) => {
-        score = value;
+    const addScore = () => {
+        score++;
     }
 
     const getScore = () => {
         return score;
     }
 
-    return {getScore, setScore}
+    return {getScore, addScore}
 })();
 
 const introduction = (() => {
@@ -66,6 +75,7 @@ const introduction = (() => {
         } else if (count < 1) {
             error.textContent = "The number of questions should be more than one."; 
         } else {
+            trivia.setTotalQuestions(count);
             error.textContent = "";
             introSection.innerHTML = "";
             fetchApi();
@@ -203,6 +213,7 @@ const displayQuestion = (data) => {
     const checkAnswer = () => {
         if (correctAnswer === userAnswer.textContent) {
             userAnswer.setAttribute("style", "color: green; font-weight: bold;");
+            updateScore();
         } else {
             userAnswer.setAttribute("style", "color: red; font-weight: bold;");
             showCorrectAnswer(correctAnswer);
@@ -272,8 +283,19 @@ const start = () => {
     const main = document.getElementsByTagName("main")[0];
     main.style.display = "block";
 
+    const outOf = document.querySelector(".out-of");
+    outOf.textContent = trivia.getTotalQuestions();
+
+    const score = document.querySelector(".score");
+    score.textContent = user.getScore();
+
     const data = trivia.getQuestionArray();
-    
     displayQuestion(data);
 }
 
+const updateScore = () => {
+    const score = document.querySelector(".score");
+    
+    user.addScore();
+    score.textContent = user.getScore();
+}
