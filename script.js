@@ -257,6 +257,7 @@ const displayQuestion = (data) => {
 
         checkAnswerBtn.setAttribute("disabled", "");
         userAnswer.textContent = "";
+        userAnswer.style.color = "black";
         nextBtn.style.display = "none";
     }
 
